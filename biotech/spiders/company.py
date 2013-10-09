@@ -9,8 +9,8 @@ import re
 class CompanySpider(CrawlSpider):
     name = 'company'
     allowed_domains = ['crmz.com']
-    #start_urls = ['http://www.crmz.com/Directory/Industry221.htm']
-    start_urls = ['http://www.crmz.com/Directory/Industry803.htm']
+    start_urls = ['http://www.crmz.com/Directory/Industry221.htm']
+    #start_urls = ['http://www.crmz.com/Directory/Industry803.htm']
 
 
     rules = (
@@ -98,20 +98,36 @@ class CompanySpider(CrawlSpider):
         if auditOpinion:
             item['auditOpinion'] = auditOpinion[0]
 
+        #packing public fillings
         publicFillings =hxs.select("//td[text()='Public Filings:']/following-sibling::td//a/@href").extract() 
         if publicFillings:
             for f in publicFillings:
                  item['publicFillings'] += self.extendHref(f,response) + " "
 
+        #packing sec fillings
+        secFillings = hxs.select("//td[text()='SEC Filings:']/following-sibling::td//a/@href").extract() 
+        if secFillings:
+            for s in secFillings:
+                item['secFillings'] += self.extendHref(s,response) + " "
 
-        #Industry
+
+        #Industry: SIC and NAICS
         indCaptions=hxs.select("//td[text()='Industry']/../following-sibling::tr//td/text()").extract()
         indNames = hxs.select("//td[text()='Industry']/../following-sibling::tr//td//a/text()").extract()
         sicTailIndex = len(indNames)
         if "NAICS" in indCaptions:
-            sicTailIndex = indCaptions.index("NAICS") - 1
-        item["SIC"] = indNames[:sicTailIndex]
-        item["NAICS"] = indNames[sicTailIndex:]
+            sicTailIndex = indCaptions.index("NAICS")
+        for i in xrange(1,sicTailIndex):
+            # maximium 5 code are packed
+            if i > 5: continue
+            item['sic%dcode'%(i)] = indCaptions[i]
+            item['sic%dname'%(i)] = indNames[i-1]
+
+        for i in xrange(sicTailIndex+1,len(indCaptions)):
+            # maximium 5 code are packed
+            if i-sicTailIndex > 5: continue
+            item['naics%dcode'%(i-sicTailIndex)] = indCaptions[i]
+            item['naics%dname'%(i-sicTailIndex)] = indNames[i-2]
 
         #leaders
         titleNames=hxs.select("//span[text()='Officers and Directors']/following-sibling::table//td[@align='LEFT']/text()").extract()

@@ -12,10 +12,6 @@ class BiotechItem(Item):
     businessSummary = Field()
     #business names
     bnames = Field()
-    #Industry of SIC
-    SIC = Field()
-    #Industry of NAICS
-    NAICS = Field()
     leaders = Field()
 
     id = Field()
@@ -43,8 +39,28 @@ class BiotechItem(Item):
     auditors = Field()
     auditOpinion = Field()
     publicFillings = Field()
-
-
+    secFillings = Field()
+    sic1code = Field() 
+    sic1name = Field() 
+    sic2code = Field() 
+    sic2name = Field() 
+    sic3code = Field() 
+    sic3name = Field() 
+    sic4code = Field() 
+    sic4name = Field() 
+    sic5code = Field() 
+    sic5name = Field() 
+    naics1code = Field()
+    naics1name = Field()
+    naics2code = Field()
+    naics2name = Field()
+    naics3code = Field()
+    naics3name = Field()
+    naics4code = Field()
+    naics4name = Field()
+    naics5code = Field()
+    naics5name = Field()
+    
     def initAll(self): 
         for k,name in self.allKeyToNames():
             self[k] = ""
@@ -76,6 +92,26 @@ class BiotechItem(Item):
                 ('auditOpinion','Audit Opinion'),
                 ('publicFillings','Public Filings'),
                 ('secFillings','SEC Filings'),
+                ('sic1code','SIC1-code'),
+                ('sic1name','SIC1-name'),
+                ('sic2code','SIC2-code'),
+                ('sic2name','SIC2-name'),
+                ('sic3code','SIC3-code'),
+                ('sic3name','SIC3-name'),
+                ('sic4code','SIC4-code'),
+                ('sic4name','SIC4-name'),
+                ('sic5code','SIC5-code'),
+                ('sic5name','SIC5-name'),
+                ('naics1code','NAICS1-code'),
+                ('naics1name','NAICS1-name'),
+                ('naics2code','NAICS2-code'),
+                ('naics2name','NAICS2-name'),
+                ('naics3code','NAICS3-code'),
+                ('naics3name','NAICS3-name'),
+                ('naics4code','NAICS4-code'),
+                ('naics4name','NAICS4-name'),
+                ('naics5code','NAICS5-code'),
+                ('naics5name','NAICS5-name'),
         ]
         return keyNameList
 
