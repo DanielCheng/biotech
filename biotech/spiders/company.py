@@ -199,6 +199,7 @@ class CompanySpider(CrawlSpider):
 
                 item['newsDate%d'%i] = nd
                 item['news%d'%i] = " ".join([newsTitle,newsHref])
+            i += 1
 
         #packing ratings
         ratingRefs=hxs.select("//td[text()='Financial Ratings:']/..//a/@href").extract() 
