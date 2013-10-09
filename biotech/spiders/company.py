@@ -59,6 +59,7 @@ class CompanySpider(CrawlSpider):
         redTexts = hxs.select("//td[@class='BoldRed']/text()").extract()
         if redTexts:
             redTexts = [ l.strip().replace('\r',' ') for l in redTexts ]
+            redTexts = [ l.strip().replace('\n',' ') for l in redTexts ]
             item['red']=" ".join(redTexts)
 
         #packing businessSummary

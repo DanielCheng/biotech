@@ -29,6 +29,7 @@ class BiotechItem(Item):
     fax = Field()
     #market cap
     cap = Field()
+    capUnit = Field()
     red = Field()
     ticker = Field()
     ratings = Field()
@@ -122,6 +123,7 @@ class BiotechItem(Item):
                 ('fax','Fax'),
                 ('ticker','Ticker'),
                 ('cap','Market Cap'),
+                ('capUnit','Market Cap Unit'),
                 ('red','Red Remarks'),
                 ('businessSummary',"Business Summary"),
                 ('ratings','Financial Ratings'),
