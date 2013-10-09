@@ -38,6 +38,12 @@ class BiotechItem(Item):
     ratings = Field()
     statements0 = Field()
     statements1 = Field()
+    fiscalYearEnd = Field()
+    lastAudit = Field()
+    auditors = Field()
+    auditOpinion = Field()
+    publicFillings = Field()
+
 
     def initAll(self): 
         for k,name in self.allKeyToNames():
@@ -64,6 +70,12 @@ class BiotechItem(Item):
                 ('ratings','Financial Ratings'),
                 ('statements0','Latest Financial Statements'),
                 ('statements1','Latest Financial Statements'),
+                ('fiscalYearEnd','Fiscal Year End'),
+                ('lastAudit','last Audit time'),
+                ('auditors','Auditors'),
+                ('auditOpinion','Audit Opinion'),
+                ('publicFillings','Public Filings'),
+                ('secFillings','SEC Filings'),
         ]
         return keyNameList
 

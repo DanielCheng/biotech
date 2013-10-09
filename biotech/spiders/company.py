@@ -9,8 +9,8 @@ import re
 class CompanySpider(CrawlSpider):
     name = 'company'
     allowed_domains = ['crmz.com']
-    start_urls = ['http://www.crmz.com/Directory/Industry221.htm']
-    #start_urls = ['http://www.crmz.com/Directory/Industry803.htm']
+    #start_urls = ['http://www.crmz.com/Directory/Industry221.htm']
+    start_urls = ['http://www.crmz.com/Directory/Industry803.htm']
 
 
     rules = (
@@ -77,6 +77,32 @@ class CompanySpider(CrawlSpider):
         fs1=hxs.select("//a[text()='Quarterly Financials']/@href").extract()
         if fs1:
             item['statements1'] = self.extendHref(fs1[0],response)
+
+        #packing Fiscal Year End
+        fye=hxs.select("//td[text()='Fiscal Year End:']/following-sibling::td/text()").extract()
+        if fye:
+            item['fiscalYearEnd'] = fye[0]
+
+        #packing lastAudit time
+        lastAudit= hxs.select("//td[text()='Last Audit:']/following-sibling::td/text()").extract()
+        if lastAudit:
+            item['lastAudit'] = lastAudit[0]
+
+        #packing Auditors
+        auditors= hxs.select("//td[text()='Auditors:']/following-sibling::td/text()").extract()
+        if auditors:
+            item['auditors'] = auditors[0]
+
+        #packing Audit Opinion
+        auditOpinion = hxs.select("//td[text()='Audit Opinion:']/following-sibling::td/text()").extract()
+        if auditOpinion:
+            item['auditOpinion'] = auditOpinion[0]
+
+        publicFillings =hxs.select("//td[text()='Public Filings:']/following-sibling::td//a/@href").extract() 
+        if publicFillings:
+            for f in publicFillings:
+                 item['publicFillings'] += self.extendHref(f,response) + " "
+
 
         #Industry
         indCaptions=hxs.select("//td[text()='Industry']/../following-sibling::tr//td/text()").extract()
