@@ -70,7 +70,7 @@ class CompanySpider(CrawlSpider):
             businessSummary = businessSummary[1].select("text()").extract()
             if businessSummary:
                 businessSummary = businessSummary[0].encode('ascii', 'ignore').strip()
-                item['businessSummary'] = businessSummary
+                item['businessSummary'] = businessSummary.replace('\r',' ')
 
         bnames = hxs.select("//span[text()='Business Names']/following-sibling::table//td[@align='LEFT']/text()").extract()
         i = 1
