@@ -37,7 +37,7 @@ class CompanySpider(CrawlSpider):
         item = response.meta['item']
         #packing phone
         name = item['name']
-        phone = hxs.select("//td[text()='%s']/../..//td[@align='LEFT']/text()"%name).extract()
+        phone = hxs.select("//td[@align='LEFT']/text()").extract()
         if phone:
             phone = phone[0]
             phone = phone.lstrip("Phone:").lstrip()
@@ -70,6 +70,7 @@ class CompanySpider(CrawlSpider):
             businessSummary = businessSummary[1].select("text()").extract()
             if businessSummary:
                 businessSummary = businessSummary[0].encode('ascii', 'ignore').strip()
+                businessSummary = businessSummary.replace('\t',' ')
                 item['businessSummary'] = businessSummary.replace('\r',' ')
 
         bnames = hxs.select("//span[text()='Business Names']/following-sibling::table//td[@align='LEFT']/text()").extract()
@@ -279,9 +280,9 @@ class CompanySpider(CrawlSpider):
                     #packing index number
                     item['number'] = num
 
-                #item['status'] = "Active"
-                #if t.select("@class").extract():
-                #    item['status'] = "Inactive"
+                item['status'] = "Active"
+                if t.select("@class").extract():
+                    item['status'] = "Inactive"
 
             elif "Country" in href:
                 #packing country
