@@ -15,6 +15,12 @@ class BiotechPipeline(object):
     def process_item(self, item, spider):
         print "Company:", item['name'], item['cap'],item['rss']
         #self.csvFile.writerow([ item[i] for i in item.keys()])
-        row = [ item[key] for key,name in item.allKeyToNames() ] 
+        row = []
+        for key,name in item.allKeyToNames():
+            if item[key] != None:
+                row.append(item[key].encode('ascii', 'ignore'))
+            else:
+                row.append(item[key])
+        
         self.csvFile.writerow(row) 
         return item

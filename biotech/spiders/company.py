@@ -9,8 +9,8 @@ import re
 class CompanySpider(CrawlSpider):
     name = 'company'
     allowed_domains = ['crmz.com']
-    start_urls = ['http://www.crmz.com/Directory/Industry221.htm']
-    #start_urls = ['http://www.crmz.com/Directory/Industry803.htm']
+    #start_urls = ['http://www.crmz.com/Directory/Industry221.htm']
+    start_urls = ['http://www.crmz.com/Directory/Industry803.htm']
 
 
     rules = (
@@ -41,7 +41,7 @@ class CompanySpider(CrawlSpider):
             phone = phone.lstrip("Phone:").lstrip()
             item['phone'] = phone
         #packing address
-        adds=hxs.select("//td[text()='%s']/../..//td[@align='CENTER'][@class='Bold']/text()"%name).extract()
+        adds=hxs.select('//td[@align="CENTER"][@class="Bold"]/text()').extract()
         item["addr0"] = name
         i = 0
         for a in adds:
@@ -58,6 +58,7 @@ class CompanySpider(CrawlSpider):
         #packing red remarks
         redTexts = hxs.select("//td[@class='BoldRed']/text()").extract()
         if redTexts:
+            redTexts = [ l.strip() for l in redTexts ]
             item['red']=" ".join(redTexts)
 
         #packing businessSummary
@@ -184,7 +185,7 @@ class CompanySpider(CrawlSpider):
                 na = news[i]
                 newsTitle = na.select('text()').extract()
                 if newsTitle:
-                    newsTitle = newsTitle[0]
+                    newsTitle = newsTitle[0].encode('ascii', 'ignore')
                 else:
                     newsTitle = ""
                 newsHref = na.select('@href').extract()
