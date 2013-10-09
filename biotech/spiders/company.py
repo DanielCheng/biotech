@@ -23,11 +23,13 @@ class CompanySpider(CrawlSpider):
         if cap:
             #change the bad \xa0 to space
             cap = cap[0].replace(u'\xa0', u' ').strip()
+            cs = cap.split()
+            #ignore no unit capacity
+            if len(cs) == 2:
+                item['cap']=cs[0]
+                item['capUnit'] = cs[1]
             # if cap == 0 maybe something goes wrong with the company
             print "Market Cap",cap
-        else: 
-            cap = None
-        item['cap'] = cap
         yield item
 
     def parse_company(self, response):
@@ -207,13 +209,15 @@ class CompanySpider(CrawlSpider):
 
         #packing ticker
         tickerhref = hxs.select("//td[text()='Ticker: ']//a/@href").extract()
+        ticker = hxs.select("//td[text()='Ticker: ']//a/text()").extract()
+        if ticker:
+            item['ticker'] = ticker[0]
         if tickerhref:
             tickerhref = tickerhref[0]
             #remove extra thing in href
             tickerhref = tickerhref.replace("javascript:window.location='","")
             tickerhref = tickerhref.strip("'")
             tickerhref = urlparse.urljoin(response.url, tickerhref)
-            item['ticker'] = tickerhref
             request = Request(tickerhref,self.parse_ticker)
             request.meta['item'] = item
             yield request
