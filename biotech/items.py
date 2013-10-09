@@ -9,9 +9,7 @@ class BiotechItem(Item):
     # define the fields for your item here like:
     # name = Field()
     href = Field()
-    history = Field()
-    #market cap
-    cap = Field()
+    businessSummary = Field()
     #business names
     bnames = Field()
     #Industry of SIC
@@ -31,6 +29,15 @@ class BiotechItem(Item):
     addr1 = Field()
     addr2 = Field()
     addr3 = Field()
+    phone = Field()
+    fax = Field()
+    #market cap
+    cap = Field()
+    red = Field()
+    ticker = Field()
+    ratings = Field()
+    statements0 = Field()
+    statements1 = Field()
 
     def initAll(self): 
         for k,name in self.allKeyToNames():
@@ -48,7 +55,15 @@ class BiotechItem(Item):
                 ('addr1','Address1'),
                 ('addr2','Address2'),
                 ('addr3','Address3'),
+                ('phone','Phone'),
+                ('fax','Fax'),
+                ('ticker','Ticker'),
                 ('cap','Market Cap'),
+                ('red','Red Remarks'),
+                ('businessSummary',"Business Summary"),
+                ('ratings','Financial Ratings'),
+                ('statements0','Latest Financial Statements'),
+                ('statements1','Latest Financial Statements'),
         ]
         return keyNameList
 
