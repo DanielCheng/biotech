@@ -135,7 +135,7 @@ class CompanySpider(CrawlSpider):
             item['naics%dcode'%(i-sicTailIndex)] = indCaptions[i]
             item['naics%dname'%(i-sicTailIndex)] = indNames[i-2]
 
-        #leaders
+        #packing Officers and Directors
         titleNames=hxs.select("//span[text()='Officers and Directors']/following-sibling::table//td/text()").extract()
         tnTuple=zip(titleNames[0::5],titleNames[1::5],titleNames[2::5],titleNames[3::5],titleNames[4::5])
         i=1
@@ -147,6 +147,54 @@ class CompanySpider(CrawlSpider):
             item['startDate%d'%i] = startDate.encode('ascii', 'ignore')
             i+=1
 
+        #packing number of employees
+        noe = hxs.select("//td[text()='Number of Employees:']/following-sibling::td/text()").extract()
+        if noe:
+            item['numOfEmployees'] = noe[0]
+
+        #packing outstanding shares
+        shares = hxs.select("//td[text()='Outstanding Shares:']/following-sibling::td/text()").extract()
+        if shares:
+            item['shares'] = shares[0]
+
+        #packing shareholders
+        shareholders = hxs.select("//td[text()='Shareholders:']/following-sibling::td/text()").extract()  
+        if shareholders:
+            item['shareholders'] = shareholders[0]
+
+        #packing taxId
+        taxId = hxs.select("//td[text()='Federal Tax Id:']/following-sibling::td/text()").extract() 
+        if taxId:
+            item['taxId'] = taxId[0]
+
+        #packing stock Exchange
+        stockEx = hxs.select("//td[text()='Stock Exchange:']/following-sibling::td/text()").extract() 
+        if stockEx:
+            item['stockEx'] = stockEx[0]
+
+        #packing news 
+        newsDates = hxs.select("//span[text()='News Stories']/following-sibling::table//td[@align='RIGHT']/text()").extract()
+        news = hxs.select("//span[text()='News Stories']/following-sibling::table//td//a")
+        i=1
+        for nd in newsDates:
+            #maximium packing 3 news
+            if i > 3: continue
+            nd = nd.encode('ascii', 'ignore')
+            if len(news) >= i:
+                na = news[i]
+                newsTitle = na.select('text()').extract()
+                if newsTitle:
+                    newsTitle = newsTitle[0]
+                else:
+                    newsTitle = ""
+                newsHref = na.select('@href').extract()
+                if newsHref:
+                    newsHref = self.extendHref(newsHref[0],response)
+                else:
+                    newsHref = ""
+
+                item['newsDate%d'%i] = nd
+                item['news%d'%i] = " ".join([newsTitle,newsHref])
 
         #packing ratings
         ratingRefs=hxs.select("//td[text()='Financial Ratings:']/..//a/@href").extract() 

@@ -90,6 +90,17 @@ class BiotechItem(Item):
     bname3 = Field()
     bname4 = Field()
     bname5 = Field()
+    numOfEmployees = Field()
+    shares = Field()
+    shareholders = Field()
+    taxId = Field()
+    stockEx = Field()
+    newsDate1 = Field()
+    news1 = Field()
+    newsDate2 = Field()
+    news2 = Field()
+    newsDate3 = Field()
+    news3 = Field()
     
     def initAll(self): 
         for k,name in self.allKeyToNames():
@@ -172,6 +183,17 @@ class BiotechItem(Item):
                 ('bname3','Business Name3'),
                 ('bname4','Business Name4'),
                 ('bname5','Business Name5'),
+                ('numOfEmployees','Number of Employees'),
+                ('shares','Outstanding Shares:'),
+                ('shareholders','Shareholders:'),
+                ('taxId','Federal Tax Id:'),
+                ('stockEx','Stock Exchange:'),
+                ('newsDate1',"News Date 1"),
+                ('news1',"News 1"),
+                ('newsDate2',"News Date 2"),
+                ('news2',"News 2"),
+                ('newsDate3',"News Date 3"),
+                ('news3',"News 3"),
         ]
         return keyNameList
 
