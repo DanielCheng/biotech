@@ -68,8 +68,14 @@ class CompanySpider(CrawlSpider):
                 businessSummary = businessSummary[0].encode('ascii', 'ignore').strip()
                 item['businessSummary'] = businessSummary
 
-        item['bnames'] = hxs.select("//span[text()='Business Names']/following-sibling::table//td[@align='LEFT']/text()").extract()
-
+        bnames = hxs.select("//span[text()='Business Names']/following-sibling::table//td[@align='LEFT']/text()").extract()
+        i = 1
+        for bn in bnames:
+            #maximium 5 business name are packed
+            if i > 5: continue
+            item["bname%d"%i] = bn.encode('ascii', 'ignore').strip()
+            i+=1
+        
         #packing financial statements
         fs0=hxs.select("//a[text()='Annual Financials']/@href").extract()
         if fs0:

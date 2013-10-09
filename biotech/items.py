@@ -85,9 +85,11 @@ class BiotechItem(Item):
     age5 = Field()
     titleDate5 = Field()
     startDate5 = Field()
-
-
-
+    bname1 = Field()
+    bname2 = Field()
+    bname3 = Field()
+    bname4 = Field()
+    bname5 = Field()
     
     def initAll(self): 
         for k,name in self.allKeyToNames():
@@ -165,6 +167,11 @@ class BiotechItem(Item):
                 ('age5','Age5'),
                 ('titleDate5','titleDate5'),
                 ('startDate5','startDate5'),
+                ('bname1','Business Name1'),
+                ('bname2','Business Name2'),
+                ('bname3','Business Name3'),
+                ('bname4','Business Name4'),
+                ('bname5','Business Name5'),
         ]
         return keyNameList
 
