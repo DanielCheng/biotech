@@ -130,9 +130,17 @@ class CompanySpider(CrawlSpider):
             item['naics%dname'%(i-sicTailIndex)] = indNames[i-2]
 
         #leaders
-        titleNames=hxs.select("//span[text()='Officers and Directors']/following-sibling::table//td[@align='LEFT']/text()").extract()
-        tnTuple=zip(titleNames[0::2],titleNames[1::2])
-        item['leaders']=[ ":".join((x,y)) for x,y in tnTuple]
+        titleNames=hxs.select("//span[text()='Officers and Directors']/following-sibling::table//td/text()").extract()
+        tnTuple=zip(titleNames[0::5],titleNames[1::5],titleNames[2::5],titleNames[3::5],titleNames[4::5])
+        i=1
+        for title,name,age,titleDate,startDate in tnTuple:
+            item['title%d'%i] = title.encode('ascii', 'ignore')
+            item['name%d'%i] = name.encode('ascii', 'ignore')
+            item['age%d'%i] = age.encode('ascii', 'ignore')
+            item['titleDate%d'%i] = titleDate.encode('ascii', 'ignore')
+            item['startDate%d'%i] = startDate.encode('ascii', 'ignore')
+            i+=1
+
 
         #packing ratings
         ratingRefs=hxs.select("//td[text()='Financial Ratings:']/..//a/@href").extract() 

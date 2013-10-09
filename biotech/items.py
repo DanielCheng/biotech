@@ -60,6 +60,34 @@ class BiotechItem(Item):
     naics4name = Field()
     naics5code = Field()
     naics5name = Field()
+    title1 = Field()
+    name1 = Field()
+    age1 = Field()
+    titleDate1 = Field()
+    startDate1 = Field()
+    title2 = Field()
+    name2 = Field()
+    age2 = Field()
+    titleDate2 = Field()
+    startDate2 = Field()
+    title3 = Field()
+    name3 = Field()
+    age3 = Field()
+    titleDate3 = Field()
+    startDate3 = Field()
+    title4 = Field()
+    name4 = Field()
+    age4 = Field()
+    titleDate4 = Field()
+    startDate4 = Field()
+    title5 = Field()
+    name5 = Field()
+    age5 = Field()
+    titleDate5 = Field()
+    startDate5 = Field()
+
+
+
     
     def initAll(self): 
         for k,name in self.allKeyToNames():
@@ -112,6 +140,31 @@ class BiotechItem(Item):
                 ('naics4name','NAICS4-name'),
                 ('naics5code','NAICS5-code'),
                 ('naics5name','NAICS5-name'),
+                ('title1','Title1'),
+                ('name1','Name1'),
+                ('age1','Age1'),
+                ('titleDate1','titleDate1'),
+                ('startDate1','startDate1'),
+                ('title2','Title2'),
+                ('name2','Name2'),
+                ('age2','Age2'),
+                ('titleDate2','titleDate2'),
+                ('startDate2','startDate2'),
+                ('title3','Title3'),
+                ('name3','Name3'),
+                ('age3','Age3'),
+                ('titleDate3','titleDate3'),
+                ('startDate3','startDate3'),
+                ('title4','Title4'),
+                ('name4','Name4'),
+                ('age4','Age4'),
+                ('titleDate4','titleDate4'),
+                ('startDate4','startDate4'),
+                ('title5','Title5'),
+                ('name5','Name5'),
+                ('age5','Age5'),
+                ('titleDate5','titleDate5'),
+                ('startDate5','startDate5'),
         ]
         return keyNameList
 
