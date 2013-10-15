@@ -3,7 +3,6 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/topics/item-pipeline.html
 import csv
-import xlwt
 from biotech.items import BiotechItem
 
 class BiotechPipeline(object):
