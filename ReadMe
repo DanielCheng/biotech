@@ -1,0 +1,19 @@
+run the program
+==
+scrapy crawl company
+
+result
+==
+result is saved to all_bio_tech_companies.csv
+using excel convert all_bio_tech_companies.csv to BiotechnologyCompanies.xlsx
+
+
+Technical Point
+==
+* Add your pipeline to the ITEM_PIPELINES setting
+* Use yield Request. Let scrapy crawl a url, and appoint processing crawled page function
+* Use XPath to extract more complex field from a page, i.e. 
+
+        #get all sibling td's text field of a td whose a text field is 'Stock Exchange'
+        hxs.select("//td[text()='Stock Exchange:']/following-sibling::td/text()")
+        
