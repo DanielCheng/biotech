@@ -9,13 +9,18 @@ import re
 class CompanySpider(CrawlSpider):
     name = 'company'
     allowed_domains = ['crmz.com']
-    #start_urls = ['http://www.crmz.com/Directory/Industry221.htm']
-    start_urls = ['http://www.crmz.com/Directory/Industry803.htm']
-
+    #Mobile Homes
+    start_urls = ['http://www.crmz.com/Directory/Industry221.htm']
+    #Biotechnology companies
+    #Biotechnology scraping will take a long time, because there are 2508 company information
+    #so use Mobile Homes for demo
+    #start_urls = ['http://www.crmz.com/Directory/Industry803.htm']
 
     rules = (
         Rule(SgmlLinkExtractor(allow=()), follow=False),
     )
+    
+    #parse stock page
     def parse_ticker(self,response):
         hxs = HtmlXPathSelector(response)
         item = response.meta['item']
@@ -33,6 +38,10 @@ class CompanySpider(CrawlSpider):
         yield item
 
     def parse_company(self, response):
+        '''
+            parse company page, extract a lot of information here 
+            if there are ticker url to the company's stock page, yield a Request, let scrapy crawl              the url.
+        '''
         hxs = HtmlXPathSelector(response)
         item = response.meta['item']
         #packing phone
@@ -228,8 +237,12 @@ class CompanySpider(CrawlSpider):
             #just yield. because these fields already initialized
             yield item
         
-
     def parse(self, response):
+        '''
+            parse start url
+            extract each company and their url
+            yield a Request using their url, trigger scrapy crawl the url
+        '''
         hxs = HtmlXPathSelector(response)
         #i['domain_id'] = hxs.select('//input[@id="sid"]/@value').extract()
         #i['name'] = hxs.select('//div[@id="name"]').extract()
@@ -297,6 +310,9 @@ class CompanySpider(CrawlSpider):
         yield request
 
     def extendHref(self,tickerhref,response):
+        '''
+            add domain of response to href
+        '''
         tickerhref = tickerhref.replace("javascript:window.location='","")
         tickerhref = tickerhref.strip("'")
         tickerhref = urlparse.urljoin(response.url, tickerhref)
